@@ -1,10 +1,10 @@
 # SmartBugs Wild Dataset
 
-This repository contain the 47,518 smart-contact extracted from the Ethereum network.
+This repository contains 47,398 smart contracts extracted from the Ethereum network.
 
-SmartBugs is available at: https://anonymous.4open.science/r/96fac4dd-5321-4abd-8399-246aac702fc6/
-
-The results of the analysis of those contract is available at: https://anonymous.4open.science/r/d41bf027-c22b-4915-b41a-7afaa123a127/
+[SmartBugs](https://github.com/smartbugs/smartbugs) was used to analyze this
+dataset. The results are available at: [https://github.com/smartbugs/smartbugs-results](https://github.com/smartbugs/smartbugs-results)
+For more details on the analysis, please see [the ICSE 2020 paper](https://arxiv.org/abs/1910.10601).
 
 ## Structure of the repository
 
@@ -19,7 +19,7 @@ The results of the analysis of those contract is available at: https://anonymous
 
 ## Creation of the dataset
 
-1. Collect the contract addresses
+1. Collect the contract addresses.
 We use Google BigQuery to select all the contracts that have at least one transaction.
 We use the following request (also available here: https://bigquery.cloud.google.com/savedquery/281902325312:47fd9afda3f8495184d98db6ae36a40c)
 ```sql
@@ -30,17 +30,22 @@ SELECT contracts.address, COUNT(1) AS tx_count
   GROUP BY contracts.address
   ORDER BY tx_count DESC
 ```
-2. Download the source code related to the contract addresses 
-We use Etherscan to download to the contracts (the script of the collect is available in `script`).
-3. We filter the contract by identifying the duplicate
+2. Download the source code related to the contract addresses. 
+We use [Etherscan](https://etherscan.io) to download to the contracts (the script of the collect is available in `script`).
+3. We filter the contracts by identifying and removing duplicates.
 
-## Metric
+## Metrics
 
 | Metric                        | Value   |
 | ----------------------------- | ------- |
 | Solidity source not available | 1290074 |
-| Solidity source available     | 972975  |
+| Solidity source available     | 972855  |
 | Unaccessible                  | 47      |
+| Invalid                       | 120     |
 | Total                         | 2263096 |
-| Unique Solidity Contracts     | 47518   |
+| Unique Solidity Contracts     | 47398   |
 | LOC of the unique contracts   | 9693457 |
+
+## License
+
+The license in the file `LICENSE` applies to all the files in this repository, except for all the files in the `contracts` folder. The files in this folder are publicly available, were obtained using the [Etherscan APIs](https://etherscan.io/apis), and retain their original licenses. Please contact us for any additional questions.
